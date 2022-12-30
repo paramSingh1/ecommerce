@@ -1,0 +1,9 @@
+.Carousel {
+  width: 500px;
+  height: 300px;
+  display: flex;
+  &_image {
+    width: 400px;
+    height: 300px;
+  }
+}

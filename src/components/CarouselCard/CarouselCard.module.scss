@@ -1,0 +1,12 @@
+.CarouselCard {
+  width: 400px;
+  height: 300px;
+  &_image {
+    width: 400px;
+    height: 300px;
+  }
+}
+.CarouselCard > img {
+  width: 400px;
+  height: 300px;
+}

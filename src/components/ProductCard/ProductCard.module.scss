@@ -1,0 +1,15 @@
+.ProductCard {
+  height: 400px;
+  width: 350px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  border: 2px solid white;
+  margin: 10px;
+  justify-content: center;
+  align-items: center;
+  &_image {
+    width: 350px;
+    height: 200px;
+  }
+}
