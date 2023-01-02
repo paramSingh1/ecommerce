@@ -21,6 +21,34 @@ export const getItems = async () => {
   return data;
 };
 
+// remove items once user has checked out.
+export const checkout = async (id, type, qty) => {
+  const docRef = doc(db, "items", id);
+  const querySnapshot = await getDocs(collection(db, "items"));
+
+  console.log(docRef);
+  const data = querySnapshot.docs.map((doc) => {
+    // console.log(`${doc.id} => ${doc.data().image} ${doc.data().qty}`);
+    const id = doc.id;
+    const restOfData = doc.data();
+    return { id, ...restOfData };
+  });
+
+  const found = data.filter((item) => item.id == id);
+  console.log(found, "found");
+  const x = found[0].variants.find((ele) => ele.type == type);
+  x.qty = x.qty - qty;
+  console.log(x, "x");
+  console.log(found, "found 1");
+
+  console.log(found[0].variants);
+
+  // console.log(found[0].variants, "vars");
+
+  console.log(data);
+  await updateDoc(docRef, { variants: found[0].variants });
+};
+
 // Add items to the DB through the code instead of needed to manually add everything.
 
 export const addItem = async (data) => {
@@ -40,6 +68,34 @@ export const toggleFav = async (id, toToggle) => {
 };
 //
 export const dbData = {
+  // fav: false,
+  // featured: true,
+  // itemName: "Blue",
+  // image:
+  //   "https://previews.123rf.com/images/saddako/saddako1308/saddako130800058/21719409-wedge-of-blue-cheese-on-white-background.jpg",
+  // variants: [
+  //   {
+  //     image:
+  //       "https://previews.123rf.com/images/saddako/saddako1308/saddako130800058/21719409-wedge-of-blue-cheese-on-white-background.jpg",
+  //     price: 12,
+  //     qty: 200,
+  //     type: "wedge",
+  //   },
+  //   {
+  //     image:
+  //       "https://cdn.shopify.com/s/files/1/0285/7828/3625/products/512TEc1tAmL.jpg?v=1602246116",
+  //     price: 24,
+  //     qty: 200,
+  //     type: "half",
+  //   },
+  //   {
+  //     image:
+  //       "http://cdn.shopify.com/s/files/1/1834/0943/products/blue-DanWh_9d3eeb0f-934b-467b-8dc2-a89d19f4879f_800x.jpg?v=1627442446",
+  //     price: 48,
+  //     qty: 125,
+  //     type: "wheel",
+  //   },
+  // ],
   // fav: false,
   // featured: true,
   // itemName: "Camembert",
@@ -98,29 +154,56 @@ export const dbData = {
   // ],
   // fav: false,
   // featured: true,
-  // itemName: "Blue",
+  // itemName: "Brie",
   // image:
-  //   "https://previews.123rf.com/images/saddako/saddako1308/saddako130800058/21719409-wedge-of-blue-cheese-on-white-background.jpg",
+  //   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTb7TzizwgP7NaSYE5wLMrkIQHYyW_yQ2D4K-8kOnu_gTdz9WK_z9vTHFE7G5YXUyhyFvY&usqp=CAU",
   // variants: [
   //   {
   //     image:
-  //       "https://previews.123rf.com/images/saddako/saddako1308/saddako130800058/21719409-wedge-of-blue-cheese-on-white-background.jpg",
-  //     price: 12,
+  //       "https://dtgxwmigmg3gc.cloudfront.net/imagery/assets/derivations/icon/512/512/true/eyJpZCI6IjhmMTFiODkyMGJhZDdmMWZlY2U4OTQ2MGVkODJkZGJjIiwic3RvcmFnZSI6InB1YmxpY19zdG9yZSJ9?signature=5d145466da26b69cf048858d131162aa25ecd15412afc417a22e27032bd6a33d",
+  //     price: 10,
   //     qty: 200,
   //     type: "wedge",
   //   },
   //   {
   //     image:
-  //       "https://cdn.shopify.com/s/files/1/0285/7828/3625/products/512TEc1tAmL.jpg?v=1602246116",
-  //     price: 24,
+  //       "https://yimages360.s3.amazonaws.com/products/2020/07/5f117ad460133/1x.jpg",
+  //     price: 20,
+  //     qty: 200,
+  //     type: "half",
+  //   },
+  //   {
+  //     image: "https://ocello.com.au/wp-content/uploads/2022/03/nangis-2-1.jpeg",
+  //     price: 40,
+  //     qty: 55,
+  //     type: "wheel",
+  //   },
+  // ],
+  // fav: false,
+  // featured: true,
+  // itemName: "Goat",
+  // image:
+  //   "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXIDtAnD-4aAJMDGOY4LaYHgnVQwr3OQOU22hiKXT_qW73cfxgX9aRipxM00O9I_dc4Aw&usqp=CAU",
+  // variants: [
+  //   {
+  //     image:
+  //       "https://previews.123rf.com/images/croreja/croreja1211/croreja121100011/16255648-goat-cheese-and-cut-into-wedge.jpg",
+  //     price: 20,
+  //     qty: 400,
+  //     type: "wedge",
+  //   },
+  //   {
+  //     image:
+  //       "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNe307_wSivUfJ3GIwYDPkSrGM5QYkFsGCCg&usqp=CAU",
+  //     price: 40,
   //     qty: 200,
   //     type: "half",
   //   },
   //   {
   //     image:
-  //       "http://cdn.shopify.com/s/files/1/1834/0943/products/blue-DanWh_9d3eeb0f-934b-467b-8dc2-a89d19f4879f_800x.jpg?v=1627442446",
-  //     price: 48,
-  //     qty: 125,
+  //       "https://thumbs.dreamstime.com/z/goat-cheese-wheel-wooden-table-34658012.jpg",
+  //     price: 70,
+  //     qty: 55,
   //     type: "wheel",
   //   },
   // ],

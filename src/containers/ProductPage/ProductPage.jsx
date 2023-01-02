@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import styles from "./ProductPage.module.scss";
-const ProductPage = ({ items, toggleFav }) => {
+const ProductPage = ({ items, handleAddToCart, toggleFav, currentCart }) => {
   const { id } = useParams();
-  //   console.log(items, "from prod page");
 
   //   the initial product that has been extracted
   const [product, setProduct] = useState({});
@@ -19,7 +18,7 @@ const ProductPage = ({ items, toggleFav }) => {
     setProduct(productData);
     setVariant(productData.variants);
 
-    // by default, the firtst type will be selected
+    // by default, the first type will be selected
     setVariantType(productData.variants[0]);
     console.log(variants, "variants test");
   }, [id, items]);
@@ -48,6 +47,7 @@ const ProductPage = ({ items, toggleFav }) => {
       : setSelectedQty(productVariant.qty);
   };
   const handleInputChange = (event) => {
+    console.log(selectedQty);
     if (!event.target.value) {
       setSelectedQty(1);
     } else {
@@ -55,6 +55,12 @@ const ProductPage = ({ items, toggleFav }) => {
         ? setSelectedQty(event.target.value)
         : setSelectedQty(productVariant.qty);
     }
+  };
+
+  const addToCart = () => {
+    const cartItem = { product, selectedQty, productVariant };
+    console.log(cartItem, "tocart");
+    handleAddToCart(cartItem);
   };
 
   const handleFavToggle = async () => {
@@ -118,7 +124,7 @@ const ProductPage = ({ items, toggleFav }) => {
             />
             <button onClick={handleInc}>+</button>
           </div>
-          <button>Add to cart</button>
+          <button onClick={addToCart}>Add to cart</button>
         </div>
       )}
       <button onClick={handleFavToggle}>

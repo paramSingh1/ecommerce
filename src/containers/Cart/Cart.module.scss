@@ -1,0 +1,18 @@
+.Cart {
+  width: 100vw;
+  padding: 20px;
+  &_item {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+    border: 2px solid white;
+    &_info {
+      width: 100%;
+    }
+    &_image {
+      padding: 5px;
+      width: 150px;
+      width: 150px;
+    }
+  }
+}

@@ -9,21 +9,32 @@ import ProductPage from "./containers/ProductPage/ProductPage";
 import { addItem, dbData } from "./services/store";
 import { toggleFav } from "./services/store";
 import Favourites from "./containers/Favourites/Favourites";
+import Cart from "./containers/Cart/Cart";
 
 function App() {
   const [items, setItems] = useState([]);
+  const [cart, setCart] = useState([]);
+
+  const handleCart = (itemObject) => {
+    setCart([...cart, itemObject]);
+    console.log("worked", cart);
+  };
+
   const pullData = async () => {
     const items = await getItems();
     setItems(items);
+    console.log(items, "items");
   };
   useEffect(() => {
     // Wrapper function to set items to state through an ASYNC function which cannot be done directly in useEffect
     const wrapper = async () => {
       pullData();
-      // addItem(dbData);
+      addItem(dbData);
     };
     wrapper();
+    console.log(cart);
   }, []);
+
   return (
     <BrowserRouter>
       <div className={styles.App}>
@@ -33,15 +44,33 @@ function App() {
           <Route path="/products" element={<Products items={items} />} />
           <Route
             path="/productpage/:id"
-            element={<ProductPage items={items} toggleFav={toggleFav} />}
+            element={
+              <ProductPage
+                items={items}
+                toggleFav={toggleFav}
+                handleAddToCart={handleCart}
+                currentCart={cart}
+              />
+            }
           />
           <Route
             path="/favourites"
             element={
               <Favourites
                 items={items}
-                setItems={setItems}
+                toggleFav={toggleFav}
                 pullData={pullData}
+              />
+            }
+          />
+          <Route
+            path="/cart"
+            element={
+              <Cart
+                items={items}
+                handleAddToCart={handleCart}
+                currentCart={cart}
+                setCart={setCart}
               />
             }
           />
