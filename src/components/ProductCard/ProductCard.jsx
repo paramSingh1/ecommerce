@@ -12,6 +12,7 @@ const ProductCard = ({ item }) => {
           src={item.image}
           alt={item.itemName}
         />
+        <p>starting from ${item.variants[0].price}</p>
       </Link>
     </div>
   );

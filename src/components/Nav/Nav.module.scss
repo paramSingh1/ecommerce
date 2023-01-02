@@ -1,0 +1,31 @@
+.Nav {
+  padding: 10px 50px;
+  margin-bottom: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  border-bottom: 2px solid #f20530;
+
+  &_item {
+    font-size: 20px;
+    text-decoration: none;
+    margin: 5px;
+    padding: 10px;
+    text-align: center;
+    // border: 2px solid #f2294e;
+    // background-color: #f26b83;
+    border-radius: 15px;
+    color: #401e2a;
+    &_title {
+      margin-right: 5px;
+    }
+  }
+  &_item:hover {
+    background-color: #401e2a;
+    border-color: #f2ede9;
+    color: #f2ede9;
+    cursor: pointer;
+  }
+}

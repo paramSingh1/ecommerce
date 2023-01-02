@@ -81,7 +81,6 @@ const ProductPage = ({ items, handleAddToCart, toggleFav, currentCart }) => {
   };
   return product ? (
     <div className={styles.productPage_Container}>
-      <h1>{product.itemName}</h1>
       <div>
         <img
           className={styles.productPage_Container_image}
@@ -89,6 +88,12 @@ const ProductPage = ({ items, handleAddToCart, toggleFav, currentCart }) => {
           alt="product photo"
         />
       </div>
+      <h1 className={styles.productPage_Container_Title}>{product.itemName}</h1>
+      <p className={styles.productPage_Container_Description}>
+        {product.description
+          ? product.description
+          : "We're working on a description!"}
+      </p>
       <div>
         <p>Select Option:</p>
         {variants.map((ele, index) => {
@@ -96,7 +101,12 @@ const ProductPage = ({ items, handleAddToCart, toggleFav, currentCart }) => {
             // console.log(ele.type);
           }
           return (
-            <button key={index} value={ele.type} onClick={changeVariant}>
+            <button
+              className={styles.productPage_Container_button}
+              key={index}
+              value={ele.type}
+              onClick={changeVariant}
+            >
               {ele.type}
             </button>
           );
@@ -114,21 +124,40 @@ const ProductPage = ({ items, handleAddToCart, toggleFav, currentCart }) => {
               : productVariant.price}{" "}
           </p>
           <div className={styles.Quantity}>
-            <button onClick={handleDec}>-</button>
+            <button
+              className={styles.productPage_Container_button}
+              onClick={handleDec}
+            >
+              -
+            </button>
             <input
+              className={styles.productPage_Container_input}
               type="number"
               value={selectedQty}
               min="1"
               max={`${productVariant.qty}`}
               onChange={handleInputChange}
             />
-            <button onClick={handleInc}>+</button>
+            <button
+              className={styles.productPage_Container_button}
+              onClick={handleInc}
+            >
+              +
+            </button>
           </div>
-          <button onClick={addToCart}>Add to cart</button>
+          <button
+            className={styles.productPage_Container_button}
+            onClick={addToCart}
+          >
+            Add to cart
+          </button>
         </div>
       )}
-      <button onClick={handleFavToggle}>
-        {" "}
+
+      <button
+        className={styles.productPage_Container_button}
+        onClick={handleFavToggle}
+      >
         {product.fav ? "Remove from Favourites" : "Add to Favourites"}
       </button>
     </div>

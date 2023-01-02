@@ -1,0 +1,14 @@
+.Favourites {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.ProductCard > a {
+  text-decoration: none;
+  color: #401e2a;
+}
+
+.Favourites_Card:hover {
+  background-color: #401e2a;
+  color: #f2ede9;
+}

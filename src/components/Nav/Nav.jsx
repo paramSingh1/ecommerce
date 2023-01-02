@@ -1,15 +1,27 @@
 import { NavLink } from "react-router-dom";
-
+import styles from "./Nav.module.scss";
 const Nav = () => {
   return (
-    <div>
-      <nav>
-        <NavLink to="/">Home</NavLink>
-        <NavLink to="/products">Products</NavLink>
-        <NavLink to="/favourites">Favourites</NavLink>
-        <NavLink to="/cart">Cart</NavLink>
-      </nav>
-    </div>
+    <nav className={styles.Nav}>
+      <div>
+        <NavLink className={styles.Nav_item} to="/">
+          <span className={styles.Nav_item_title}>La Maison du Fromage</span>
+        </NavLink>
+      </div>
+      <div>
+        <NavLink className={styles.Nav_item} to="/products">
+          Products
+        </NavLink>
+        <NavLink className={styles.Nav_item} to="/favourites">
+          Favourites
+        </NavLink>
+      </div>
+      <div>
+        <NavLink className={styles.Nav_item} to="/cart">
+          Cart
+        </NavLink>
+      </div>
+    </nav>
   );
 };
 

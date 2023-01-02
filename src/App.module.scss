@@ -1,6 +1,13 @@
+// @import "~bootstrap/scss/bootstrap";
+// @import "node_modules/bootstrap/scss/bootstrap";
+@import url("https://fonts.googleapis.com/css2?family=Anybody&display=swap");
+
 .App {
-  max-width: 1280px;
+  height: 100vh;
+  width: 100vw;
   margin: 0 auto;
   padding: 2rem;
-  text-align: center;
+  font-family: "Anybody", cursive;
+  background-color: #f2ede9;
+  color: #401e2a;
 }

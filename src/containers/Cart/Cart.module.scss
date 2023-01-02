@@ -1,7 +1,8 @@
 .Cart {
-  width: 100vw;
+  width: 100%;
   padding: 20px;
   &_item {
+    margin: 15px;
     display: flex;
     flex-direction: row;
     padding: 10px;

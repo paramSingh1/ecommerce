@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ProductCard from "../../components/ProductCard/ProductCard";
+import styles from "./Favourites.module.scss";
 const Favourites = ({ items, pullData }) => {
   const [list, setList] = useState([]);
 
@@ -22,10 +23,16 @@ const Favourites = ({ items, pullData }) => {
     setList(faveItems);
   }, [items]);
   return (
-    <div>
+    <div className={styles.Favourites}>
       {list.length ? (
         list.map((item, index) => {
-          return <ProductCard item={item} key={index} />;
+          return (
+            <ProductCard
+              className={styles.Favourites_Card}
+              item={item}
+              key={index}
+            />
+          );
         })
       ) : (
         <div>

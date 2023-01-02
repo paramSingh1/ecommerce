@@ -35,6 +35,7 @@ const Cart = ({ currentCart, setCart }) => {
                 src={ele.productVariant.image}
                 alt=""
               />
+
               <div className={styles.Cart_item_info}>
                 <h3>
                   Item : {ele.product.itemName} - {ele.productVariant.type}
@@ -44,6 +45,9 @@ const Cart = ({ currentCart, setCart }) => {
                 <p>
                   Total Price - $ {ele.selectedQty * ele.productVariant.price}
                 </p>
+                <Link to={`/productpage/${ele.product.id}`}>
+                  <p>Product Page</p>
+                </Link>
               </div>
             </div>
           );
