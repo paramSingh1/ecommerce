@@ -1,7 +1,15 @@
 .productPage_Container {
   border: 2px solid white;
+  padding: 5px;
   &_image {
     width: 200px;
     height: 200px;
   }
+}
+
+.Quantity {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  margin: 5px;
 }

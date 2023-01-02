@@ -1,5 +1,11 @@
 // This file contains all CRUD functions for the store.
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  updateDoc,
+  doc,
+} from "firebase/firestore";
 import { db } from "./firestore";
 
 // Get all items from the db and return an array so items can be set in state
@@ -27,7 +33,12 @@ export const addItem = async (data) => {
   console.log(newDoc, "new item added");
   return newDoc;
 };
-
+// function to toggle the favourite boolean in the database.
+export const toggleFav = async (id, toToggle) => {
+  const docRef = doc(db, "items", id);
+  await updateDoc(docRef, { fav: toToggle });
+};
+//
 export const dbData = {
   // fav: false,
   // featured: true,
@@ -57,7 +68,6 @@ export const dbData = {
   //     type: "wheel",
   //   },
   // ],
-
   // fav: false,
   // featured: true,
   // itemName: "Cheddar",
@@ -86,33 +96,32 @@ export const dbData = {
   //     type: "wheel",
   //   },
   // ],
-
-  fav: false,
-  featured: true,
-  itemName: "Blue",
-  image:
-    "https://previews.123rf.com/images/saddako/saddako1308/saddako130800058/21719409-wedge-of-blue-cheese-on-white-background.jpg",
-  variants: [
-    {
-      image:
-        "https://previews.123rf.com/images/saddako/saddako1308/saddako130800058/21719409-wedge-of-blue-cheese-on-white-background.jpg",
-      price: 12,
-      qty: 200,
-      type: "wedge",
-    },
-    {
-      image:
-        "https://cdn.shopify.com/s/files/1/0285/7828/3625/products/512TEc1tAmL.jpg?v=1602246116",
-      price: 24,
-      qty: 200,
-      type: "half",
-    },
-    {
-      image:
-        "http://cdn.shopify.com/s/files/1/1834/0943/products/blue-DanWh_9d3eeb0f-934b-467b-8dc2-a89d19f4879f_800x.jpg?v=1627442446",
-      price: 48,
-      qty: 125,
-      type: "wheel",
-    },
-  ],
+  // fav: false,
+  // featured: true,
+  // itemName: "Blue",
+  // image:
+  //   "https://previews.123rf.com/images/saddako/saddako1308/saddako130800058/21719409-wedge-of-blue-cheese-on-white-background.jpg",
+  // variants: [
+  //   {
+  //     image:
+  //       "https://previews.123rf.com/images/saddako/saddako1308/saddako130800058/21719409-wedge-of-blue-cheese-on-white-background.jpg",
+  //     price: 12,
+  //     qty: 200,
+  //     type: "wedge",
+  //   },
+  //   {
+  //     image:
+  //       "https://cdn.shopify.com/s/files/1/0285/7828/3625/products/512TEc1tAmL.jpg?v=1602246116",
+  //     price: 24,
+  //     qty: 200,
+  //     type: "half",
+  //   },
+  //   {
+  //     image:
+  //       "http://cdn.shopify.com/s/files/1/1834/0943/products/blue-DanWh_9d3eeb0f-934b-467b-8dc2-a89d19f4879f_800x.jpg?v=1627442446",
+  //     price: 48,
+  //     qty: 125,
+  //     type: "wheel",
+  //   },
+  // ],
 };

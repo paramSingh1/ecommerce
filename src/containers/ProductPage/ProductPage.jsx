@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import styles from "./ProductPage.module.scss";
-const ProductPage = ({ items }) => {
+const ProductPage = ({ items, toggleFav }) => {
   const { id } = useParams();
   //   console.log(items, "from prod page");
 
@@ -10,7 +10,9 @@ const ProductPage = ({ items }) => {
   const [productVariant, setProductVariant] = useState({});
   const [variants, setVariant] = useState([]);
   const [variantType, setVariantType] = useState({});
+  const [selectedQty, setSelectedQty] = useState(1);
 
+  const navigate = useNavigate();
   useEffect(() => {
     const productData = items.find((item) => item.id == id);
     // console.log(productData);
@@ -23,6 +25,7 @@ const ProductPage = ({ items }) => {
   }, [id, items]);
 
   useEffect(() => {}, [productVariant]);
+  useEffect(() => {}, [selectedQty]);
 
   const changeVariant = (event) => {
     event.preventDefault();
@@ -35,6 +38,40 @@ const ProductPage = ({ items }) => {
     setProductVariant(newType);
 
     console.log(variantType, "state");
+  };
+  const handleDec = () => {
+    selectedQty > 1 ? setSelectedQty(selectedQty - 1) : setSelectedQty(1);
+  };
+  const handleInc = () => {
+    selectedQty <= productVariant.qty
+      ? setSelectedQty(selectedQty + 1)
+      : setSelectedQty(productVariant.qty);
+  };
+  const handleInputChange = (event) => {
+    if (!event.target.value) {
+      setSelectedQty(1);
+    } else {
+      event.target.value < productVariant.qty
+        ? setSelectedQty(event.target.value)
+        : setSelectedQty(productVariant.qty);
+    }
+  };
+
+  const handleFavToggle = async () => {
+    let negatedBool = !product.fav;
+
+    const updatedProduct = {
+      ...product,
+      fav: negatedBool,
+    };
+    setProduct(updatedProduct);
+
+    console.log(negatedBool, "negatedBool");
+    await toggleFav(product.id, negatedBool);
+    //if the item is being removed from favourites, go back to favourites page
+    if (!negatedBool) {
+      navigate("/favourites");
+    }
   };
   return product ? (
     <div className={styles.productPage_Container}>
@@ -61,12 +98,33 @@ const ProductPage = ({ items }) => {
       </div>
       {productVariant.price && (
         <div>
-          <p>Price : ${productVariant.price} </p>
           <p>
             We have {productVariant.qty} {productVariant.type}'s in stock!{" "}
           </p>
+          <p>
+            Price : $
+            {selectedQty
+              ? productVariant.price * selectedQty
+              : productVariant.price}{" "}
+          </p>
+          <div className={styles.Quantity}>
+            <button onClick={handleDec}>-</button>
+            <input
+              type="number"
+              value={selectedQty}
+              min="1"
+              max={`${productVariant.qty}`}
+              onChange={handleInputChange}
+            />
+            <button onClick={handleInc}>+</button>
+          </div>
+          <button>Add to cart</button>
         </div>
       )}
+      <button onClick={handleFavToggle}>
+        {" "}
+        {product.fav ? "Remove from Favourites" : "Add to Favourites"}
+      </button>
     </div>
   ) : (
     <div>Product does not exist</div>
