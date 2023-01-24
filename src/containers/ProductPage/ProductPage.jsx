@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import styles from "./ProductPage.module.scss";
-const ProductPage = ({ items, handleAddToCart, toggleFav, currentCart }) => {
+import { getItems } from "../../services/store";
+const ProductPage = ({
+  items,
+  setItems,
+  handleAddToCart,
+  toggleFav,
+  currentCart,
+  pullData,
+}) => {
   const { id } = useParams();
 
   //   the initial product that has been extracted
@@ -11,32 +19,37 @@ const ProductPage = ({ items, handleAddToCart, toggleFav, currentCart }) => {
   const [variantType, setVariantType] = useState({});
   const [selectedQty, setSelectedQty] = useState(1);
 
-  const navigate = useNavigate();
+  useEffect(() => {
+    const wrapper = async () => {
+      const newitems = await getItems();
+      setItems(newitems);
+    };
+    wrapper();
+  }, []);
+
+  // const navigate = useNavigate();
   useEffect(() => {
     const productData = items.find((item) => item.id == id);
-    // console.log(productData);
+
     setProduct(productData);
-    setVariant(productData.variants);
 
     // by default, the first type will be selected
     setVariantType(productData.variants[0]);
-    console.log(variants, "variants test");
-  }, [id, items]);
+    setVariant(productData.variants);
+  }, [variants]);
 
-  useEffect(() => {}, [productVariant]);
-  useEffect(() => {}, [selectedQty]);
+  // useEffect(() => {}, [productVariant]);
+  // useEffect(() => {}, [selectedQty]);
 
   const changeVariant = (event) => {
     event.preventDefault();
-    // console.log(event.target.value, "yes");
+
     const selectedType = event.target.value;
     setVariantType(selectedType);
 
     const newType = variants.find((ele) => ele.type == selectedType);
-    console.log(newType, "newtype");
-    setProductVariant(newType);
 
-    console.log(variantType, "state");
+    setProductVariant(newType);
   };
   const handleDec = () => {
     selectedQty > 1 ? setSelectedQty(selectedQty - 1) : setSelectedQty(1);
@@ -47,7 +60,6 @@ const ProductPage = ({ items, handleAddToCart, toggleFav, currentCart }) => {
       : setSelectedQty(productVariant.qty);
   };
   const handleInputChange = (event) => {
-    console.log(selectedQty);
     if (!event.target.value) {
       setSelectedQty(1);
     } else {
@@ -59,7 +71,7 @@ const ProductPage = ({ items, handleAddToCart, toggleFav, currentCart }) => {
 
   const addToCart = () => {
     const cartItem = { product, selectedQty, productVariant };
-    console.log(cartItem, "tocart");
+
     handleAddToCart(cartItem);
   };
 
@@ -72,12 +84,11 @@ const ProductPage = ({ items, handleAddToCart, toggleFav, currentCart }) => {
     };
     setProduct(updatedProduct);
 
-    console.log(negatedBool, "negatedBool");
     await toggleFav(product.id, negatedBool);
     //if the item is being removed from favourites, go back to favourites page
-    if (!negatedBool) {
-      navigate("/favourites");
-    }
+    // if (!negatedBool) {
+    //   navigate("/favourites");
+    // }
   };
   return product ? (
     <div className={styles.productPage_Container}>
@@ -96,21 +107,19 @@ const ProductPage = ({ items, handleAddToCart, toggleFav, currentCart }) => {
       </p>
       <div>
         <p>Select Option:</p>
-        {variants.map((ele, index) => {
-          {
-            // console.log(ele.type);
-          }
-          return (
-            <button
-              className={styles.productPage_Container_button}
-              key={index}
-              value={ele.type}
-              onClick={changeVariant}
-            >
-              {ele.type}
-            </button>
-          );
-        })}
+        {variants &&
+          variants.map((ele, index) => {
+            return (
+              <button
+                className={styles.productPage_Container_button}
+                key={index}
+                value={ele.type}
+                onClick={changeVariant}
+              >
+                {ele.type}
+              </button>
+            );
+          })}
       </div>
       {productVariant.price && (
         <div>

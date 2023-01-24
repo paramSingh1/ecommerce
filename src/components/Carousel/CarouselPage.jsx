@@ -5,15 +5,13 @@ import { Carousel } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const CarouselPage = ({ items }) => {
-  const [caroInfo, setInfo] = useState([]);
-
   useEffect(() => {
     setInfo(items);
   }, []);
 
   const carouselItems = items.filter((ele) => ele.featured);
   return (
-    <div className={styles.Carousel}>
+    <div className={styles.carousel}>
       <Carousel fade>
         {carouselItems.map((ele, index) => {
           return (

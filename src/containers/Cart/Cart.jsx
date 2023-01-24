@@ -4,7 +4,6 @@ import styles from "./Cart.module.scss";
 import { checkout } from "../../services/store";
 
 const Cart = ({ currentCart, setCart }) => {
-  console.log(currentCart, "what we have");
   const navigate = useNavigate();
   const handleCheckout = async () => {
     const itemsById = currentCart.map((item) => {
@@ -14,8 +13,6 @@ const Cart = ({ currentCart, setCart }) => {
         type: item.productVariant.type,
       };
     });
-
-    console.log(itemsById, "second");
 
     itemsById.forEach((element) => {
       checkout(element.itemID, element.type, element.qty);
@@ -61,7 +58,9 @@ const Cart = ({ currentCart, setCart }) => {
         </div>
       )}
       {currentCart.length ? (
-        <button onClick={handleCheckout}>Checkout</button>
+        <button className={styles.Cart_item_btn} onClick={handleCheckout}>
+          Checkout
+        </button>
       ) : (
         ""
       )}

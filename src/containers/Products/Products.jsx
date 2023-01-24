@@ -1,7 +1,11 @@
 import ProductCard from "../../components/ProductCard/ProductCard";
 import styles from "./Products.module.scss";
+import { useEffect } from "react";
 
-const Products = ({ items }) => {
+const Products = ({ items, pullData }) => {
+  useEffect(() => {
+    pullData();
+  }, []);
   return (
     <div className={styles.Products}>
       {items &&

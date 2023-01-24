@@ -12,9 +12,6 @@ const Favourites = ({ items, pullData }) => {
       pullData();
     };
     wrapper();
-
-    console.log(list, "list");
-    console.log(items, "fav items");
   }, []);
   //   This useEffect looks for changes in the items state, after being pulled,
   // filters the data and sets into list so it can be displayed.

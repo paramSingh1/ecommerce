@@ -17,22 +17,19 @@ function App() {
 
   const handleCart = (itemObject) => {
     setCart([...cart, itemObject]);
-    console.log("worked", cart);
   };
 
   const pullData = async () => {
     const items = await getItems();
     setItems(items);
-    console.log(items, "items");
   };
   useEffect(() => {
     // Wrapper function to set items to state through an ASYNC function which cannot be done directly in useEffect
     const wrapper = async () => {
-      pullData();
-      addItem(dbData);
+      await pullData();
+      // addItem(dbData);
     };
     wrapper();
-    console.log(cart);
   }, []);
 
   return (
@@ -41,7 +38,10 @@ function App() {
         <Nav />
         <Routes>
           <Route path="/" element={<HomePage items={items} />} />
-          <Route path="/products" element={<Products items={items} />} />
+          <Route
+            path="/products"
+            element={<Products items={items} pullData={pullData} />}
+          />
           <Route
             path="/productpage/:id"
             element={
@@ -50,6 +50,8 @@ function App() {
                 toggleFav={toggleFav}
                 handleAddToCart={handleCart}
                 currentCart={cart}
+                pullData={pullData}
+                setItems={setItems}
               />
             }
           />

@@ -1,6 +1,7 @@
 .Favourites {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .ProductCard > a {
