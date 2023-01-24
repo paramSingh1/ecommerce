@@ -1,0 +1,39 @@
+@import "node_modules/bootstrap/scss/bootstrap";
+
+.Carousel {
+  width: 600px;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+
+  &_item {
+    width: 600px;
+    height: 500px;
+  }
+  &_image {
+    width: 600px;
+    height: 100%;
+    align-items: center;
+    display: flex;
+    border-radius: 20px;
+  }
+  &_caption {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    height: 10%;
+    align-items: center;
+    color: black;
+    background-color: rgb(7, 7, 7, 0.5);
+  }
+}
+.carousel {
+  width: 600px;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+}
